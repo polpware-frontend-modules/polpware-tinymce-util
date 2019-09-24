@@ -1,0 +1,24 @@
+/*
+ * Public API Surface of tinymce-util
+ */
+export * from './lib/util/Uuid';
+export * from './lib/util/ArrUtils';
+export * from './lib/util/LazyEvaluator';
+export * from './lib/util/Predicate';
+export * from './lib/util/Private';
+export * from './lib/api/Env';
+export * from './lib/api/util/Class';
+export * from './lib/api/util/Delay';
+// export * from './lib/api/util/FakeStorage';
+export * from './lib/api/util/JSON';
+export * from './lib/api/util/JSONRequest';
+export * from './lib/api/util/Observable';
+export * from './lib/api/util/Tools';
+export * from './lib/api/util/Color';
+export * from './lib/api/util/I18n';
+export * from './lib/api/util/EventDispatcher';
+export * from './lib/api/util/Promise';
+export * from './lib/api/util/URI';
+export * from './lib/api/util/XHR';
+export * from './lib/api/util/LocalStorage';
+//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoicHVibGljLWFwaS5qcyIsInNvdXJjZVJvb3QiOiJuZzovL0Bwb2xwd2FyZS90aW55bWNlLXV0aWwvIiwic291cmNlcyI6WyJwdWJsaWMtYXBpLnRzIl0sIm5hbWVzIjpbXSwibWFwcGluZ3MiOiJBQUFBOztHQUVHO0FBRUgsY0FBYyxpQkFBaUIsQ0FBQztBQUNoQyxjQUFjLHFCQUFxQixDQUFDO0FBQ3BDLGNBQWMsMEJBQTBCLENBQUM7QUFDekMsY0FBYyxzQkFBc0IsQ0FBQztBQUNyQyxjQUFjLG9CQUFvQixDQUFDO0FBQ25DLGNBQWMsZUFBZSxDQUFDO0FBQzlCLGNBQWMsc0JBQXNCLENBQUM7QUFDckMsY0FBYyxzQkFBc0IsQ0FBQztBQUNyQyw4Q0FBOEM7QUFDOUMsY0FBYyxxQkFBcUIsQ0FBQztBQUNwQyxjQUFjLDRCQUE0QixDQUFDO0FBQzNDLGNBQWMsMkJBQTJCLENBQUM7QUFDMUMsY0FBYyxzQkFBc0IsQ0FBQztBQUNyQyxjQUFjLHNCQUFzQixDQUFDO0FBQ3JDLGNBQWMscUJBQXFCLENBQUM7QUFDcEMsY0FBYyxnQ0FBZ0MsQ0FBQztBQUMvQyxjQUFjLHdCQUF3QixDQUFDO0FBQ3ZDLGNBQWMsb0JBQW9CLENBQUM7QUFDbkMsY0FBYyxvQkFBb0IsQ0FBQztBQUNuQyxjQUFjLDZCQUE2QixDQUFDIiwic291cmNlc0NvbnRlbnQiOlsiLypcbiAqIFB1YmxpYyBBUEkgU3VyZmFjZSBvZiB0aW55bWNlLXV0aWxcbiAqL1xuXG5leHBvcnQgKiBmcm9tICcuL2xpYi91dGlsL1V1aWQnO1xuZXhwb3J0ICogZnJvbSAnLi9saWIvdXRpbC9BcnJVdGlscyc7XG5leHBvcnQgKiBmcm9tICcuL2xpYi91dGlsL0xhenlFdmFsdWF0b3InO1xuZXhwb3J0ICogZnJvbSAnLi9saWIvdXRpbC9QcmVkaWNhdGUnO1xuZXhwb3J0ICogZnJvbSAnLi9saWIvdXRpbC9Qcml2YXRlJztcbmV4cG9ydCAqIGZyb20gJy4vbGliL2FwaS9FbnYnO1xuZXhwb3J0ICogZnJvbSAnLi9saWIvYXBpL3V0aWwvQ2xhc3MnO1xuZXhwb3J0ICogZnJvbSAnLi9saWIvYXBpL3V0aWwvRGVsYXknO1xuLy8gZXhwb3J0ICogZnJvbSAnLi9saWIvYXBpL3V0aWwvRmFrZVN0b3JhZ2UnO1xuZXhwb3J0ICogZnJvbSAnLi9saWIvYXBpL3V0aWwvSlNPTic7XG5leHBvcnQgKiBmcm9tICcuL2xpYi9hcGkvdXRpbC9KU09OUmVxdWVzdCc7XG5leHBvcnQgKiBmcm9tICcuL2xpYi9hcGkvdXRpbC9PYnNlcnZhYmxlJztcbmV4cG9ydCAqIGZyb20gJy4vbGliL2FwaS91dGlsL1Rvb2xzJztcbmV4cG9ydCAqIGZyb20gJy4vbGliL2FwaS91dGlsL0NvbG9yJztcbmV4cG9ydCAqIGZyb20gJy4vbGliL2FwaS91dGlsL0kxOG4nO1xuZXhwb3J0ICogZnJvbSAnLi9saWIvYXBpL3V0aWwvRXZlbnREaXNwYXRjaGVyJztcbmV4cG9ydCAqIGZyb20gJy4vbGliL2FwaS91dGlsL1Byb21pc2UnO1xuZXhwb3J0ICogZnJvbSAnLi9saWIvYXBpL3V0aWwvVVJJJztcbmV4cG9ydCAqIGZyb20gJy4vbGliL2FwaS91dGlsL1hIUic7XG5leHBvcnQgKiBmcm9tICcuL2xpYi9hcGkvdXRpbC9Mb2NhbFN0b3JhZ2UnO1xuXG5cblxuXG5cblxuIl19
