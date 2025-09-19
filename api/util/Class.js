@@ -7,113 +7,117 @@
  */
 import Tools from './Tools';
 const { each, extend } = Tools;
-/**
- * A base class that provides a classical inheritance-style `extend` method.
- * All other classes created with this system will inherit from this class.
- */
-class PolpwareClass {
-    /**
-     * Provides classical inheritance, based on code by John Resig.
-     * This static method creates and returns a new class that inherits from `this` class.
-     * @param prop An object defining the new class's properties, methods, and statics.
-     * @returns A new class constructor.
-     */
-    static extend(prop) {
-        const _super = this.prototype;
-        let initializing = false;
-        // The dummy class constructor
-        const NewClass = function (...args) {
-            // All construction is actually done in the init method
-            if (!initializing) {
-                // Run the class constructor
-                if (this.init) {
-                    this.init(...args);
-                }
-                // Run mixin constructors
-                const mixins = this.Mixins;
-                if (mixins) {
-                    for (const mixin of mixins) {
-                        if (mixin.init) {
-                            mixin.init.apply(this, args);
-                        }
+var extendClass, initializing;
+var Class = function () {
+};
+// Provides classical inheritance, based on code made by John Resig
+Class['extend'] = extendClass = function (prop) {
+    var self = this, _super = self.prototype, prototype, name, member;
+    // The dummy class constructor
+    var Class = function () {
+        var i, mixins, mixin, self = this;
+        // All construction is actually done in the init method
+        if (!initializing) {
+            // Run class constuctor
+            if (self.init) {
+                self.init.apply(self, arguments);
+            }
+            // Run mixin constructors
+            mixins = self.Mixins;
+            if (mixins) {
+                i = mixins.length;
+                while (i--) {
+                    mixin = mixins[i];
+                    if (mixin.init) {
+                        mixin.init.apply(self, arguments);
                     }
                 }
             }
+        }
+    };
+    // Dummy function, needs to be extended in order to provide functionality
+    var dummy = function () {
+        return this;
+    };
+    // Creates a overloaded method for the class
+    // this enables you to use this._super(); to call the super function
+    var createMethod = function (name, fn) {
+        return function () {
+            var self = this, tmp = self._super, ret;
+            self._super = _super[name];
+            ret = fn.apply(self, arguments);
+            self._super = tmp;
+            return ret;
         };
-        // Instantiate a base class (but only create the instance,
-        // don't run the init constructor)
-        initializing = true;
-        NewClass.prototype = new this();
-        NewClass.prototype.constructor = NewClass;
-        initializing = false;
-        const prototype = NewClass.prototype;
-        // --- Process the definition object ---
-        // Add mixins to the prototype
-        if (prop.Mixins) {
-            each(prop.Mixins, (mixin) => {
-                for (const name in mixin) {
-                    if (name !== 'init') {
-                        prop[name] = mixin[name];
-                    }
+    };
+    // Instantiate a base class (but only create the instance,
+    // don't run the init constructor)
+    initializing = true;
+    /*eslint new-cap:0 */
+    prototype = new self();
+    initializing = false;
+    // Add mixins
+    if (prop.Mixins) {
+        each(prop.Mixins, function (mixin) {
+            for (var name in mixin) {
+                if (name !== "init") {
+                    prop[name] = mixin[name];
                 }
-            });
-            if (_super.Mixins) {
-                prop.Mixins = _super.Mixins.concat(prop.Mixins);
             }
+        });
+        if (_super.Mixins) {
+            prop.Mixins = _super.Mixins.concat(prop.Mixins);
         }
-        // Generate dummy methods
-        if (prop.Methods) {
-            each(prop.Methods.split(','), (name) => {
-                prop[name] = function () { return this; };
-            });
-        }
-        // Generate property getter/setter methods
-        if (prop.Properties) {
-            each(prop.Properties.split(','), (name) => {
-                const fieldName = `_${name}`;
-                prop[name] = function (value) {
-                    if (value !== undefined) {
-                        this[fieldName] = value;
-                        return this;
-                    }
-                    return this[fieldName];
-                };
-            });
-        }
-        // Copy properties over onto the new prototype
-        for (const name in prop) {
-            const member = prop[name];
-            // Check if we're overwriting a function on the superclass
-            if (typeof member === 'function' && typeof _super[name] === 'function') {
-                // Create a method that allows calling `this._super()`
-                prototype[name] = (function (superMethod, fn) {
-                    return function (...args) {
-                        const tmp = this._super;
-                        this._super = superMethod;
-                        const ret = fn.apply(this, args);
-                        this._super = tmp;
-                        return ret;
-                    };
-                })(_super[name], member);
-            }
-            else {
-                prototype[name] = member;
-            }
-        }
-        // Add static functions
-        if (prop.Statics) {
-            each(prop.Statics, (func, name) => {
-                NewClass[name] = func;
-            });
-        }
-        // Merge default settings
-        if (prop.Defaults) {
-            NewClass.Defaults = extend({}, this.Defaults, prop.Defaults);
-        }
-        // Make this class extendible
-        NewClass.extend = this.extend;
-        return NewClass;
     }
-}
-export default PolpwareClass;
+    // Generate dummy methods
+    if (prop.Methods) {
+        each(prop.Methods.split(','), function (name) {
+            prop[name] = dummy;
+        });
+    }
+    // Generate property methods
+    if (prop.Properties) {
+        each(prop.Properties.split(','), function (name) {
+            var fieldName = '_' + name;
+            prop[name] = function (value) {
+                var self = this, undef;
+                // Set value
+                if (value !== undef) {
+                    self[fieldName] = value;
+                    return self;
+                }
+                // Get value
+                return self[fieldName];
+            };
+        });
+    }
+    // Static functions
+    if (prop.Statics) {
+        each(prop.Statics, function (func, name) {
+            Class[name] = func;
+        });
+    }
+    // Default settings
+    if (prop.Defaults && _super.Defaults) {
+        prop.Defaults = extend({}, _super.Defaults, prop.Defaults);
+    }
+    // Copy the properties over onto the new prototype
+    for (name in prop) {
+        member = prop[name];
+        if (typeof member == "function" && _super[name]) {
+            prototype[name] = createMethod(name, member);
+        }
+        else {
+            prototype[name] = member;
+        }
+    }
+    // Populate our constructed prototype object
+    Class.prototype = prototype;
+    // Enforce the constructor to be what we expect
+    Class.constructor = Class;
+    // And make this class extendible
+    Class['extend'] = extendClass;
+    return Class;
+};
+export default Class;
 //# sourceMappingURL=Class.js.map
