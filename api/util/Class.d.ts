@@ -5,6 +5,6 @@
  * utility, originally based on code by John Resig. It now uses native
  * ES module and class syntax.
  */
-declare var Class: () => void;
+declare const Class: any;
 export default Class;
 //# sourceMappingURL=Class.d.ts.map
