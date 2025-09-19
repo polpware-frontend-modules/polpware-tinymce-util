@@ -8,6 +8,7 @@ export * from './api/util/Observable';
 export * from './api/util/Tools';
 export * from './api/util/URI';
 export * from './api/util/VK';
+export * from './api/util/Class';
 export * from './events/EventUtils';
 export * from './util/ArrUtils';
 //# sourceMappingURL=index.d.ts.map

@@ -1,6 +1,6 @@
 {
   "name": "@polpware/tinymce-tailor",
-  "version": "0.1",
+  "version": "0.2.0",
   "description": "A set of self-contained utilities generated from TinyMCE",
   "main": "index.js",
   "module": "index.js",
