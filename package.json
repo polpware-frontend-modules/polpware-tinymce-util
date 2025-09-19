@@ -1,0 +1,13 @@
+{
+  "name": "@polpware/tinymce-tailor",
+  "version": "0.1",
+  "description": "A set of self-contained utilities generated from TinyMCE",
+  "main": "index.js",
+  "module": "index.js",
+  "types": "index.d.ts",
+  "dependencies": {
+    "@ephox/katamari": "^9.1.6",
+    "@ephox/sand": "^6.0.10",
+    "@ephox/sugar": "^9.3.1"
+  }
+}
